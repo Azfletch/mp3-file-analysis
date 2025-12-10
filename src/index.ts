@@ -3,6 +3,8 @@ import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import fs from 'fs';
 
+import { countMp3Frames } from './lib/count-mp3-frames';
+
 const app: Application = express();
 const PORT: number = 3000;
 
@@ -41,14 +43,21 @@ app.post('/file-upload', upload.single('mp3'), async (req: Request, res: Respons
   if (!req.file) {
     return res.status(400).json({ error: 'No mp3 file uploaded' });
   }
-
-  // TODO: calculate and return frame count
+  
+  const frameCount = await countMp3Frames(req.file.path)
 
   res.status(200).json({
     message: 'MP3 uploaded successfully!',
     savedAs: req.file.filename,
     location: req.file.path,
+    frameCount: frameCount
   });
+
+
+  // TODO: supertest API
+  // TODO: Open API docs
+  // TODO: Add types
+  // TODO: Add README.md
 })
 
 app.listen(PORT, () => {
