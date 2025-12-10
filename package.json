@@ -1,0 +1,19 @@
+{
+  "name": "mp3-file-analysis",
+  "version": "1.0.0",
+  "description": "A simple Express app to analyse an MP£ file and return the frame count",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "author": "Arron Fletcher",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "nodemon": "3.1.11",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  }
+}
