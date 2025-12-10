@@ -1,13 +1,14 @@
 {
   "name": "mp3-file-analysis",
   "version": "1.0.0",
-  "description": "A simple Express app to analyse an MP£ file and return the frame count",
+  "description": "A simple Express app to analyse an MP3 file and return the frame count",
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "swagger": "node ./swagger.js"
   },
   "author": "Arron Fletcher",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "@types/node": "24.10.1",
     "jest": "30.2.0",
     "nodemon": "3.1.11",
+    "swagger-autogen": "2.23.7",
     "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"

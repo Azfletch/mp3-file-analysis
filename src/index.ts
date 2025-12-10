@@ -40,6 +40,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/file-upload', upload.single('mp3'), async (req: Request, res: Response) => {
+  // #swagger.description = 'POST endpoint for uploading a mp3 file to. When a valid file is uploaded, the response contains the frame count of the MP3'
+
   if (!req.file) {
     return res.status(400).json({ error: 'No mp3 file uploaded' });
   }
@@ -55,9 +57,7 @@ app.post('/file-upload', upload.single('mp3'), async (req: Request, res: Respons
 
 
   // TODO: supertest API
-  // TODO: Open API docs
   // TODO: Add types
-  // TODO: Add README.md
 })
 
 app.listen(PORT, () => {

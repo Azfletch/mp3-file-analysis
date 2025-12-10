@@ -32,3 +32,9 @@ To run the unit tests:
 ```bash
 npm run test
 ```
+
+To generate/update swagger documentation for endpoints:
+
+```bash
+npm run swagger
+```
