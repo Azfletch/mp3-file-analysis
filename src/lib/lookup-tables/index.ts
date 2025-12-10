@@ -1,16 +1,6 @@
-const mpegVersions: Record<number, '1' | '2' | '2.5' | undefined> = {
-  0b00: '2.5',
-  0b10: '2',
-  0b11: '1',
-};
+import { Bitrates, Layers, MpegVersions, SampleRates } from '../../types/lookup-tables';
 
-const layers: Record<number, 1 | 2 | 3 | undefined> = {
-  0b11: 1, // Layer I
-  0b10: 2, // Layer II
-  0b01: 3, // Layer III
-};
-
-const bitrates: Record<string, Record<number, (number | null)[]>> = {
+const bitrates: Bitrates = {
   '1': {
     1: [null, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, null],
     2: [null, 32, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 384, null],
@@ -28,7 +18,19 @@ const bitrates: Record<string, Record<number, (number | null)[]>> = {
   },
 };
 
-const sampleRates: Record<string, (number | null)[]> = {
+const layers: Layers = {
+  0b11: 1, // Layer I
+  0b10: 2, // Layer II
+  0b01: 3, // Layer III
+};
+
+const mpegVersions: MpegVersions = {
+  0b00: '2.5',
+  0b10: '2',
+  0b11: '1',
+};
+
+const sampleRates: SampleRates = {
   '1': [44100, 48000, 32000, null],
   '2': [22050, 24000, 16000, null],
   '2.5': [11025, 12000, 8000, null],

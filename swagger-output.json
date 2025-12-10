@@ -23,7 +23,7 @@
     },
     "/file-upload": {
       "post": {
-        "description": "POST endpoint for uploading a mp3 file to. When a valid file is uploaded, the response contains the frame count of the MP3",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"

@@ -1,18 +1,19 @@
-import * as fs from 'fs';
+import { createReadStream, ReadStream } from 'fs';
 import { lookupTables } from '../lookup-tables';
+import { FrameCount, FrameLength } from '../../types/count-mp3-frames';
 
-export const countMp3Frames = async (filePath: string): Promise<number> => {
+export const countMp3Frames = async (filePath: string): Promise<FrameCount> => {
   return new Promise((resolve, reject) => {
-    const stream = fs.createReadStream(filePath);
+    const stream: ReadStream = createReadStream(filePath);
 
     let buffer = Buffer.alloc(0);
     let offset = 0;
-    let frames = 0;
+    let frames: FrameCount = 0;
     let id3Skipped = false;
 
     // Streaming parser
-    stream.on('data', (chunk: any) => {
-      buffer = Buffer.concat([buffer.slice(offset), chunk]); // keep only remainder
+    stream.on('data', (chunk: string | Buffer<ArrayBufferLike>) => {
+      buffer = Buffer.concat([buffer.slice(offset), chunk as Buffer<ArrayBufferLike>]); // keep only remainder
       offset = 0;
 
       // Skip ID3 header once
@@ -46,7 +47,7 @@ export const countMp3Frames = async (filePath: string): Promise<number> => {
 
           if (!bitrate || !sampleRate) { offset++; continue; }
 
-          let frameLength: number;
+          let frameLength: FrameLength;
           if (layer === 1)
             frameLength = ((12 * (bitrate * 1000)) / sampleRate + padding) * 4;
           else {
