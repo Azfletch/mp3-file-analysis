@@ -1,6 +1,8 @@
 import { createReadStream, ReadStream } from 'fs';
+
 import { lookupTables } from '../lookup-tables';
-import { FrameCount, FrameLength } from '../../types/count-mp3-frames';
+import { FrameCount } from '../../types/count-mp3-frames';
+import { calculateFrameLength } from '../calculate-frame-length';
 
 export const countMp3Frames = async (filePath: string): Promise<FrameCount> => {
   return new Promise((resolve, reject) => {
@@ -47,13 +49,7 @@ export const countMp3Frames = async (filePath: string): Promise<FrameCount> => {
 
           if (!bitrate || !sampleRate) { offset++; continue; }
 
-          let frameLength: FrameLength;
-          if (layer === 1)
-            frameLength = ((12 * (bitrate * 1000)) / sampleRate + padding) * 4;
-          else {
-            const coef = version === '1' ? 144 : 72;
-            frameLength = Math.floor((coef * (bitrate * 1000)) / sampleRate) + padding;
-          }
+          const frameLength = calculateFrameLength(layer, bitrate, sampleRate, padding, version)
 
           if (offset + frameLength > buffer.length)
             break; // wait for more data
