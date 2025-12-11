@@ -12,7 +12,7 @@ We process chunks from fs.createReadStream and maintain a rolling buffer to dete
 
 - Processes chunk-by-chunk (Handles large files safely)
 - No full file load in memory	(Ultra low RAM footprint)
-- Works for CBR & VBR	Counts real frames
+- Works for CBR & VBR
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ The app can be then tested using Postman:
 - Send POST request to http://localhost:3000/file-upload
 - Set the request body to `form-data` with a key of 'mp3' and a value of your chosen file.
 
-To run the unit tests:
+Unit tests are written using Jest and Supertest. To run the unit tests:
 
 ```bash
 npm run test
