@@ -4,7 +4,7 @@
 
 This is a simple NodeJS application that utilises ExpressJS to create an API endpoint for uploading MP3 files.The MP3 files are then stored locally using Multer before being analysed!
 
-File analysis is performed in an ansynchronous streaming method, that doesn't require the entire file loaded into memory. Making this API ideal for handling large files (hundreds of MB or more).
+File analysis is performed in an asynchronous streaming method, that doesn't require the entire file loaded into memory. Making this API ideal for handling large files (hundreds of MB or more).
 
 We process chunks from fs.createReadStream and maintain a rolling buffer to detect and count MP3 frames. The API then returns the count of MP3 frames!
 

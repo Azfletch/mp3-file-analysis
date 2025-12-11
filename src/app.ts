@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import multer, { FileFilterCallback, Multer } from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -7,7 +7,6 @@ import { countMp3Frames } from './lib/count-mp3-frames';
 import { FrameCount } from './types/count-mp3-frames';
 
 const app: Application = express();
-const PORT: number = 3000;
 const uploadFolder: string = './uploads';
 
 if (!fs.existsSync(uploadFolder)) {
@@ -37,7 +36,7 @@ const fileFilter = (_req: Request, file: Express.Multer.File, cb: FileFilterCall
 const upload: Multer = multer({ storage, fileFilter });
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('MP3 File Analysis API is up and running! 🚀');
+  res.send('MP3 File Analysis API is up and running!');
 });
 
 app.post('/file-upload', upload.single('mp3'), async (req: Request, res: Response) => {
@@ -48,18 +47,23 @@ app.post('/file-upload', upload.single('mp3'), async (req: Request, res: Respons
   const frameCount: FrameCount = await countMp3Frames(req.file.path)
 
   res.status(200).json({
-    message: 'MP3 uploaded successfully!',
-    savedAs: req.file.filename,
-    location: req.file.path,
     frameCount: frameCount
   });
-
-
-  // TODO: supertest API
-  // TODO: Try catch around frameCount? Return error code, add test
-  // TODO: Remove extra returned data
 })
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+// Error-handling middleware
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  // Multer errors
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ error: err.message });
+  }
+
+  if (err && err.message) {
+    // Multer fileFilter error
+    return res.status(400).json({ error: err.message });
+  }
+
+  return res.status(500).json({ error: 'Internal Server Error' });
 });
+
+export default app;
