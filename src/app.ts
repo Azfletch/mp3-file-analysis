@@ -1,7 +1,8 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
-import multer, { FileFilterCallback, Multer } from 'multer';
 import path from 'path';
 import fs from 'fs';
+
+import express, { Application, NextFunction, Request, Response } from 'express';
+import multer, { FileFilterCallback, Multer } from 'multer';
 
 import { countMp3Frames } from './lib/count-mp3-frames';
 import { FrameCount } from './types/count-mp3-frames';
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
 });
 
 // File filter for mp3 only
-const fileFilter = (_req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+const fileFilter = (_req: Request, file: Express.Multer.File, cb: FileFilterCallback) => { // eslint-disable-line no-undef
   if (file.mimetype === 'audio/mpeg' || file.originalname.endsWith('.mp3')) {
     cb(null, true);
   } else {
@@ -52,7 +53,7 @@ app.post('/file-upload', upload.single('mp3'), async (req: Request, res: Respons
 })
 
 // Error-handling middleware
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line
   // Multer errors
   if (err instanceof multer.MulterError) {
     return res.status(400).json({ error: err.message });

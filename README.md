@@ -33,6 +33,13 @@ Unit tests are written using Jest and Supertest. To run the unit tests:
 npm run test
 ```
 
+To lint the project:
+
+```bash
+npm run lint
+npm run lint-fix
+```
+
 To generate/update swagger documentation for endpoints:
 
 ```bash
